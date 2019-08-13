@@ -18,60 +18,76 @@ class Saved extends Component {
   }
 
   getSavedBooks = () => {
-    API.getSavedBooks()
-      .then(res => {
-        if (res.data.length > 0) {
-          this.setState({
-            books: res.data,
-            target: "_blank"
-          });
-        } else {
-          this.setState({
-            noResults: true
-          });
-        }
-
-      })
-      .catch(err => console.log(err));
-  }
+    API.getSavedBooks().then(res => {
+      if (res.data.length > 0) {
+        this.setState({
+          books: res.data,
+          target: "_blank"
+        });
+      } else {
+        this.setState({
+          noResults: true
+        });
+      }
+    });
+    // .catch(err => console.log(err));
+  };
 
   deleteBook = id => {
     API.deleteBook(id)
       .then(res => this.getSavedBooks())
       .catch(err => console.log(err));
-  }
+  };
 
   render() {
     if (this.state.noResults) {
       return (
         <div>
           <Jumbotron>
-            <h1 className="display-4">(React) Google Books Search</h1>
-            <p className="lead">Search for and annotate books of interest.</p>
+            <h1 className="display-4">Library</h1>
+            <p className="lead">Search google for books of interest.</p>
             <hr className="my-4" />
             <p className="lead">
-              <Link className="btn btn-default btn-lg" to="/" role="button">New Search</Link>
-              <Link className="btn btn-default btn-lg" to="/saved" role="button">Saved Books</Link>
+              <Link className="btn btn-default btn-lg" to="/" role="button">
+                New Search
+              </Link>
+            </p>
+            <p className="lead">
+              <Link
+                className="btn btn-default btn-lg"
+                to="/saved"
+                role="button"
+              >
+                Saved Books
+              </Link>
             </p>
           </Jumbotron>
           <Container>
-            <Link to="/">You have no saved books. Click here to find some.</Link>
+            <Link to="/">
+              You have no saved books. Click here to find some.
+            </Link>
           </Container>
         </div>
-      )
+      );
     }
     return (
       <div>
         <Jumbotron>
-          <h1 className="display-4">(React) Google Books Search</h1>
-          <p className="lead">Search for and save books of interest.</p>
+          <h1 className="display-4">Library</h1>
+          <p className="lead">Search google for books of interest.</p>
           <hr className="my-4" />
           <p className="lead">
-            <Link className="btn btn-default btn-lg" to="/" role="button">New Search</Link>
-            <Link className="btn btn-default btn-lg" to="/saved" role="button">Saved Books</Link>
+            <Link className="btn btn-default btn-lg" to="/" role="button">
+              New Search
+            </Link>
+          </p>
+          <p className="lead">
+            <Link className="btn btn-default btn-lg" to="/saved" role="button">
+              Saved Books
+            </Link>
           </p>
         </Jumbotron>
-        
+
         <Container>
           <h2>Saved Books</h2>
           <List>
@@ -87,7 +103,7 @@ class Saved extends Component {
                   </a>
                   <p>Written By {book.author}</p>
                   <p>
-                  {/* <img align="left" style={{paddingRight:10}}
+                    {/* <img align="left" style={{paddingRight:10}}
                     src={book.image} alt="new"
                   /> */}
                     {book.description}
@@ -102,7 +118,7 @@ class Saved extends Component {
                     onClick={() => this.deleteBook(book._id)}
                   >
                     Delete
-                </BookBtn>
+                  </BookBtn>
                 </div>
               </ListItem>
             ))}

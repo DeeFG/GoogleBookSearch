@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
 import BookBtn from "../../components/BookBtn";
@@ -14,9 +14,8 @@ class Results extends Component {
   };
 
   componentDidMount() {
-    const data = this.props.location.data
+    const data = this.props.location.data;
     if (data && data.results.length > 0) {
-
       this.setState({
         books: data.results.filter((value, index) => index < 5),
         target: "_blank"
@@ -29,45 +28,61 @@ class Results extends Component {
   }
 
   saveBook = book => {
-    API.saveBook(book)
-      .then(res => {
-        const currentBooks = this.state.books;
-        const filterBooks = currentBooks.filter(book => book.id !== res.data.id);
-        this.setState({
-          books: filterBooks
-        });
-      })
-      .catch(err => console.log(err));
-  }
+    API.saveBook(book).then(res => {
+      const currentBooks = this.state.books;
+      const filterBooks = currentBooks.filter(book => book.id !== res.data.id);
+      this.setState({
+        books: filterBooks
+      });
+    });
+    // .catch(err => console.log(err));
+  };
 
   render() {
     if (this.state.noResults) {
       return (
         <div>
           <Jumbotron>
-            <h1 className="display-4">(React) Google Books Search</h1>
-            <p className="lead">Search for and annotate books of interest.</p>
+            <h1 className="display-4">Library</h1>
+            <p className="lead">Search google for books of interest.</p>
             <hr className="my-4" />
             <p className="lead">
-              <Link className="btn btn-default btn-lg" to="/" role="button">New Search</Link>
-              <Link className="btn btn-default btn-lg" to="/saved" role="button">Saved Books</Link>
+              <Link className="btn btn-default btn-lg" to="/" role="button">
+                New Search
+              </Link>
+            </p>
+            <p className="lead">
+              <Link
+                className="btn btn-default btn-lg"
+                to="/saved"
+                role="button"
+              >
+                Saved Books
+              </Link>
             </p>
           </Jumbotron>
+
           <Container>
             <Link to="/">No results - click here to search again.</Link>
           </Container>
         </div>
-      )
+      );
     }
     return (
       <div>
         <Jumbotron>
-          <h1 className="display-4"> Google Books Search</h1>
-          <p className="lead">Search for and save books of interest.</p>
+          <h1 className="display-4">Library</h1>
+          <p className="lead">Search google for books of interest.</p>
           <hr className="my-4" />
           <p className="lead">
-            <Link className="btn btn-default btn-lg" to="/" role="button">New Search</Link>
-            <Link className="btn btn-default btn-lg" to="/saved" role="button">Saved Books</Link>
+            <Link className="btn btn-default btn-lg" to="/" role="button">
+              New Search
+            </Link>
+          </p>
+          <p className="lead">
+            <Link className="btn btn-default btn-lg" to="/saved" role="button">
+              Saved Books
+            </Link>
           </p>
         </Jumbotron>
         <Container>
@@ -78,14 +93,14 @@ class Results extends Component {
                 <div className="date-div">
                   <a
                     key={"" + index + book.id}
-                    href={book.volumeInfo.infoLink}
+                    href={book.volumeInfo.infoLink.smallThumbnail}
                     target={this.state.target}
                   >
                     {book.volumeInfo.title}
                   </a>
-                    <p>Written By {book.volumeInfo.authors}</p>
+                  <p>Written By {book.volumeInfo.authors}</p>
                   <p>
-                  {/* <img align="left" style={{paddingRight:10}}
+                    {/* <img align="left" style={{paddingRight:10}}
                     src={book.volumeInfo.imageLinks.smallThumbnail} alt="new"
                   /> */}
                     {book.volumeInfo.description}
@@ -96,14 +111,16 @@ class Results extends Component {
                     key={"" + book.id + index}
                     btntype="info"
                     disabled={book.volumeInfo.infoLink === "/"}
-                    onClick={() => this.saveBook({
-                      title: book.volumeInfo.title,
-                      author: book.volumeInfo.authors[0],
-                      description: book.volumeInfo.description,
-                      image: book.volumeInfo.imageLinks.smallThumbnail,
-                      link: book.volumeInfo.infoLink,
-                      _id: book.id
-                    })}
+                    onClick={() =>
+                      this.saveBook({
+                        title: book.volumeInfo.title,
+                        author: book.volumeInfo.authors[0],
+                        description: book.volumeInfo.description,
+                        image: book.volumeInfo.imageLinks.smallThumbnail,
+                        link: book.volumeInfo.infoLink,
+                        _id: book.id
+                      })
+                    }
                   >
                     Save
                   </BookBtn>
