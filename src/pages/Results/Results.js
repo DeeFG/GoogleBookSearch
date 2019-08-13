@@ -116,7 +116,7 @@ class Results extends Component {
                         title: book.volumeInfo.title,
                         author: book.volumeInfo.authors[0],
                         description: book.volumeInfo.description,
-                        image: book.volumeInfo.imageLinks.smallThumbnail,
+                        // image: book.volumeInfo.imageLinks.smallThumbnail,
                         link: book.volumeInfo.infoLink,
                         _id: book.id
                       })
