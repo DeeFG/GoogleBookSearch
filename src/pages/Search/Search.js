@@ -74,6 +74,7 @@ class Search extends Component {
               label="Book Title"
               placeholder="Search Book Title (required)"
             />
+            
             <FormBtn onClick={this.handleFormSubmit} className="btn btn-info">
               Search
             </FormBtn>

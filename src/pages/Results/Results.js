@@ -100,9 +100,9 @@ class Results extends Component {
                   </a>
                   <p>Written By {book.volumeInfo.authors}</p>
                   <p>
-                    {/* <img align="left" style={{paddingRight:10}}
+                    <img align="left" style={{paddingRight:10}}
                     src={book.volumeInfo.imageLinks.smallThumbnail} alt="new"
-                  /> */}
+                  />
                     {book.volumeInfo.description}
                   </p>
                 </div>
@@ -116,7 +116,7 @@ class Results extends Component {
                         title: book.volumeInfo.title,
                         author: book.volumeInfo.authors[0],
                         description: book.volumeInfo.description,
-                        // image: book.volumeInfo.imageLinks.smallThumbnail,
+                        image: book.volumeInfo.imageLinks.smallThumbnail,
                         link: book.volumeInfo.infoLink,
                         _id: book.id
                       })
